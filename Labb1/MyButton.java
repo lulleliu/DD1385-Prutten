@@ -4,23 +4,23 @@ import javax.swing.JButton;
 
 public class MyButton extends JButton {
     public boolean toggled;
-    public Color BLUE;
 
     public MyButton(String text1){
+        // 4. Button is constructed according to its super class (JButton)
         super(text1);
-        this.setBackground(BLUE);
+        this.setBackground(Color.BLUE);
     }
 
-    public void toggleState(String text1,String text2) {
-
+    public void toggleState() {
+        // 7. When button is pressed its apperance is changed accordingly.
         if (!this.toggled) {
-             this.setText(text2);
+             this.setText("TOGGLE");
              this.setBackground(Color.GREEN);
              toggled = true;
         }
 
         else {
-            this.setText(text1);
+            this.setText("toggle");
             this.setBackground(Color.BLUE);
             toggled = false;
         }
