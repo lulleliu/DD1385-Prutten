@@ -20,8 +20,8 @@ class FifteenModel implements Boardgame {
             for (int j = 0; j < 4; j++){
                 int randomposition =  (int)Math.floor(Math.random() * (pieceArray.size() - 1 - 0 + 1) + 0);
                 if (pieceArray.get(randomposition).equals("__")){
-                    coordsEmpty[1] = i;
-                    coordsEmpty[0] = j;
+                    coordsEmpty[0] = i;
+                    coordsEmpty[1] = j;
                 }
                 board[i][j] = pieceArray.get(randomposition);
                 pieceArray.remove(randomposition);
@@ -31,7 +31,7 @@ class FifteenModel implements Boardgame {
     }
 
 
-
+/* 
     @Override
     public boolean move(int x, int y) {
         int x1 = x-1;
@@ -115,18 +115,17 @@ class FifteenModel implements Boardgame {
 
     }
 
-/*
+*/
 public boolean move(int x, int y) {
     int emptyX = coordsEmpty[0];
     int emptyY = coordsEmpty[1];
-
     if ((Math.abs(emptyX - x) == 1 && emptyY == y) || (Math.abs(emptyY - y) == 1 && emptyX == x)) {
         // Check if the selected cell is adjacent to the empty cell
 
         // Swap the selected cell and the empty cell
-        String tempSlot = board[x][y];
-        board[x][y] = "__";
-        board[emptyX][emptyY] = tempSlot;
+        String tempSlot = board[y][x];
+        board[y][x] = "__";
+        board[emptyY][emptyX] = tempSlot;
 
         coordsEmpty[0] = x;
         coordsEmpty[1] = y;
@@ -138,8 +137,6 @@ public boolean move(int x, int y) {
         return false;
     }
 }
-    */
-
     public String getStatus(int x, int y) {
         if (board[x][y] == null){
             return " ";
