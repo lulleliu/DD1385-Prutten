@@ -15,7 +15,6 @@ class FifteenModel implements Boardgame {
         for (Integer i = 0; i < 15; i++){
             pieceArray.add(String.valueOf(i+1));
         }
-         
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++){
                 int randomposition =  (int)Math.floor(Math.random() * (pieceArray.size() - 1 - 0 + 1) + 0);
@@ -148,7 +147,6 @@ public boolean move(int x, int y) {
     public String getMessage() {
         return message;
     }
-
 
     
 }

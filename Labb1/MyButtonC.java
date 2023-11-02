@@ -11,7 +11,7 @@ public class MyButtonC extends JButton {
         // 4. Button is constructed according to its super class (JButton)
         super(text1);
         this.setBackground(Color.BLUE);
-        Ear newEar = new Ear(this);
+        new Ear(this);
         
     }
 
