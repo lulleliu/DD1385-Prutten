@@ -123,9 +123,9 @@ public boolean move(int x, int y) {
         // Check if the selected cell is adjacent to the empty cell
 
         // Swap the selected cell and the empty cell
-        String tempSlot = board[y][x];
-        board[y][x] = "__";
-        board[emptyY][emptyX] = tempSlot;
+        String tempSlot = board[x][y];
+        board[x][y] = "__";
+        board[emptyX][emptyY] = tempSlot;
 
         coordsEmpty[0] = x;
         coordsEmpty[1] = y;
