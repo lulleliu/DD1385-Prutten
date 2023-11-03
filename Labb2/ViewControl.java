@@ -3,11 +3,10 @@ package Labb2;
 import javax.swing.*;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-// import Labb2.FifteenModel;
 
 // lämpliga import-satser här
 class ViewControl extends JFrame implements ActionListener {
@@ -34,6 +33,20 @@ class ViewControl extends JFrame implements ActionListener {
         // Ändrar layouten så det blir av matrisform
         mainPanel.setLayout(new BorderLayout());
         slotsPanel.setLayout(new GridLayout(size, size));
+        
+        //Adds the squares
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                // Vi vill skapa en ruta med information i, dvs rutans status.
+                Square square = new Square(gm.getStatus(i, j));
+                square.setCoordinates(i,j);
+                square.addActionListener(this);
+                board[i][j] = square;
+
+                slotsPanel.add(square);
+            }
+            
+        }
 
         messagePanel.add(mess);
 
@@ -47,13 +60,29 @@ class ViewControl extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        //FifteenModel testboard = new FifteenModel();
-        ViewControl test = new ViewControl(null, 4, "TEST");
+        FifteenModel testboard = new FifteenModel();
+        ViewControl test = new ViewControl(testboard, 4, "TEST");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+        Square clickedSquare = (Square) e.getSource();
+
+        game.move(clickedSquare.getX(), clickedSquare.getY());
+        String message = game.getMessage();
+        mess.setText(message);
+        updateBoard();
+        
+
+
+    }
+
+    public void updateBoard(){
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                board[i][j].setText(game.getStatus(i, j));
+            }
+        }
     }
 }

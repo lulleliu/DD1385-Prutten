@@ -8,17 +8,8 @@ public class Square extends JButton {
     private int y;
     private String value;
     
-    /* 
-    public Square(int x, int y){
-        this.x = x;
-        this.y = y;
-
-    }
-
-    */
-    
-    Square(){
-        super();
+    Square(String text){
+        super(text);
     }
 
     public void setCoordinates(int x, int y){
@@ -26,5 +17,18 @@ public class Square extends JButton {
         this.y = y;
 
     }
+
+    public void setValue(String val){
+        value = val;
+    }
+
+    public int getX(){
+        return x;
+    }
+
+    public int getY(){
+        return y;
+    }
+    
 
 }
