@@ -10,7 +10,9 @@ class FifteenModel implements Boardgame {
     
     //Constructor
     public FifteenModel(){
-        ArrayList<String> pieceArray = new ArrayList<String>();
+        initializeBoard();
+    }
+       /*  ArrayList<String> pieceArray = new ArrayList<String>();
         pieceArray.add("__");
         for (Integer i = 0; i < 15; i++){
             pieceArray.add(String.valueOf(i+1));
@@ -24,11 +26,29 @@ class FifteenModel implements Boardgame {
                 }
                 board[i][j] = pieceArray.get(randomposition);
                 pieceArray.remove(randomposition);
-            } 
+            } */
+    private void initializeBoard() {
+        ArrayList<String> pieceArray = new ArrayList<String>();
+        pieceArray.add("__");
+        for (int i = 0; i < 15; i++) {
+            pieceArray.add(String.valueOf(i + 1));
+        }
+
+        coordsEmpty = new int[2]; // Initialize the empty cell coordinates array.
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                int randomPosition = (int) Math.floor(Math.random() * (pieceArray.size() - 1 - 0 + 1) + 0);
+                if (pieceArray.get(randomPosition).equals("__")) {
+                    coordsEmpty[0] = i;
+                    coordsEmpty[1] = j;
+                }
+                board[i][j] = pieceArray.get(randomPosition);
+                pieceArray.remove(randomPosition);
         }
 
     }
-
+    }
 
 /* 
     @Override
@@ -147,6 +167,4 @@ public boolean move(int x, int y) {
     public String getMessage() {
         return message;
     }
-
-    
 }
