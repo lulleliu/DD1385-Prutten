@@ -58,14 +58,6 @@ class ViewControl extends JFrame implements ActionListener {
         gameFrame.setSize(500,500);
         
     }
-
-    public static void main(String[] args) {
-
-        //FifteenModel testboard = new FifteenModel();
-        TictactoeModel testboard = new TictactoeModel();
-        ViewControl test = new ViewControl(testboard, 3, "TEST");
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         Square clickedSquare = (Square) e.getSource();
