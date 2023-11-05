@@ -4,13 +4,17 @@ public class TictactoeModel implements Boardgame {
     private String currentMessage = "Player X's Turn";
     private String[][] board = new String[3][3];
     private int roundsCount = 1;
-    private String Player = "X";
+    private String player = "X";
+    private int xmove;
+    private int ymove;
+    private Boolean moveselected = false;
 
     TictactoeModel(){
         InitializeBoard();
     }
+
     private void InitializeBoard(){
-        for (int i=0; 1<3; i++){
+        for (int i=0; i<3; i++){
             for (int j=0; j<3; j++){
                 board[i][j] = " ";
             }
@@ -28,7 +32,7 @@ public class TictactoeModel implements Boardgame {
             }
 
             setPlayer();
-            currentMessage = "Player " + Player + "'s turn";
+            currentMessage = "Player " + player + "'s turn";
             if (roundsCount%2==0){
                 //kollar om det är spelare 2s tur
                 board[x][y] = "O";
@@ -40,14 +44,47 @@ public class TictactoeModel implements Boardgame {
             //Lägger till denna rundan på counten 
             roundsCount+=1;
             return true;
-            }
-        return false;
-    }
+            }}
 
+        // move phase
+        else {
+            if (!moveselected && (!board[x][y].equals(player) || board[x][y].equals(" "))){
+                currentMessage = "Not an available move, pick an" + player +  " piece to move";
+                return false;
+            }
+
+            // available move
+            else if (!moveselected && board[x][y].equals(player)){
+                currentMessage = "Pick an empty slot to move to";
+                xmove = x;
+                ymove = y;
+                moveselected = true;
+                return true;
+                
+            }
+
+            if (moveselected == true){
+                if (board[x][y].equals(" ")){
+                    board[x][y] = board[xmove][ymove];
+                    board[xmove][ymove] = " ";
+                    setPlayer();
+                    roundsCount++;
+                    moveselected = false;
+                    return true;      
+                }                 
+                else {
+                    currentMessage = "välj en tom";
+                    return false;
+                }   
+
+            
+
+        } 
+        }
     private void setPlayer(){
-        if (Player == "X"){
-            Player = "O";
-        }else Player = "X";
+        if (player.equals("X")){
+            player = "O";
+        }else player = "X";
     }
     //En del av interfacet boardgame returnerar statusen av en position i arrayen
     public String getStatus(int x, int y){
@@ -57,5 +94,8 @@ public class TictactoeModel implements Boardgame {
     //En del av interfacet boardgame, returnerar meddelandet
     public String getMessage(){
         return currentMessage;
-    }}
+    }
+    }
+
+
 
