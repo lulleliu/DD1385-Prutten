@@ -46,7 +46,8 @@ class ViewControl extends JFrame implements ActionListener {
                 slotsPanel.add(square);
             }
             
-        }    
+        }
+
         messagePanel.add(mess);
 
         // Lägger till panelerna i framen
@@ -79,6 +80,7 @@ class ViewControl extends JFrame implements ActionListener {
     }
 
     public void updateBoard(){
+
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 board[i][j].setText(game.getStatus(i, j));
