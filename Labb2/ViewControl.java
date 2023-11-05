@@ -60,8 +60,10 @@ class ViewControl extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        FifteenModel testboard = new FifteenModel();
-        ViewControl test = new ViewControl(testboard, 4, "TEST");
+
+        //FifteenModel testboard = new FifteenModel();
+        TictactoeModel testboard = new TictactoeModel();
+        ViewControl test = new ViewControl(testboard, 3, "TEST");
     }
 
     @Override
