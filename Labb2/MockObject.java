@@ -18,7 +18,7 @@ public class MockObject implements Boardgame {
 
     @Override
     public String getMessage() {
-        return "AMAAAZING!";
+        return message;
     }
     
 }

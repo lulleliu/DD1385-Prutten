@@ -45,7 +45,7 @@ public class TictactoeModel implements Boardgame {
     
     private boolean movePhase(int x, int y){
             if (!moveselected && (!board[x][y].equals(player) || board[x][y].equals(" "))){
-                currentMessage = "Not an available move, pick an" + player +  " piece to move";
+                currentMessage = "Not an available move, pick an " + player +  " piece to move";
                 return false;
             }
 
@@ -66,10 +66,11 @@ public class TictactoeModel implements Boardgame {
                     setPlayer();
                     roundsCount++;
                     moveselected = false;
+                    currentMessage = "Player " + player + "'s turn to move";
                     return true;      
                 }                 
                 else {
-                    currentMessage = "välj en tom";
+                    currentMessage = "Select an empty slot to move to";
                     return false;
             }
         }

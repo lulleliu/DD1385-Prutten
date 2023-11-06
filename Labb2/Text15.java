@@ -4,7 +4,7 @@ import java.util.*;
 class Text15 {
     public static void main(String[] u) {
         Scanner scan = new Scanner(System.in);
-        Boardgame thegame = new TictactoeModel();                 // Model object is created
+        Boardgame thegame = new FifteenModel();                 // Model object is created
         System.out.println("\nWelcome to tictactoe\n");
         while (true) {
             // Print the current board
@@ -17,7 +17,7 @@ class Text15 {
             System.out.println();
             int i = scan.nextInt();  // get an int number from terminal window
             int j = scan.nextInt();
-            thegame.move(i,j);	                             // move
+            thegame.move(j,i);	                             // move
             System.out.println(thegame.getMessage());	     // getMessage
         }
     }
