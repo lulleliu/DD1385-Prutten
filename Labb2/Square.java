@@ -24,11 +24,11 @@ public class Square extends JButton {
         value = val;
     }
 
-    public int getX(){
+    public int xGet(){
         return x;
     }
 
-    public int getY(){
+    public int yGet(){
         return y;
     }
     

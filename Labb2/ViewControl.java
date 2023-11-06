@@ -54,9 +54,9 @@ class ViewControl extends JFrame implements ActionListener {
                 buttons.add(board[i][j]);
             }
         }
-        
+
         updateBoard();
-        
+
         this.add(buttons);
         setVisible(true);
         /*messagePanel.add(mess);
@@ -74,7 +74,7 @@ class ViewControl extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Square clickedSquare = (Square) e.getSource();
 
-        game.move(clickedSquare.getX(), clickedSquare.getY());
+        game.move(clickedSquare.xGet(), clickedSquare.yGet());
         String message = game.getMessage();
         mess.setText(message);
         updateBoard();
