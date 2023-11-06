@@ -46,17 +46,18 @@ class ViewControl extends JFrame implements ActionListener {
             for (int j = 0; j < size; j++) {
                 // Vi vill skapa en ruta med information i, dvs rutans status.
                 Square square = new Square(gm.getStatus(i, j));
-                square.setCoordinates(i,j);
                 square.addActionListener(this);
+                square.setCoordinates(i,j);
                 board[i][j] = square;
 
                 //slotsPanel.add(square);
                 buttons.add(board[i][j]);
             }
-          
         }
-        //updateBoard();
-        this.add(buttons, BorderLayout.CENTER);
+        
+        updateBoard();
+        
+        this.add(buttons);
         setVisible(true);
         /*messagePanel.add(mess);
         gameFrame.setVisible(true); 
