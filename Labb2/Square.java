@@ -1,4 +1,6 @@
 package Labb2;
+import java.awt.Color;
+
 import javax.swing.*;
 //import javafx.util.Pair;
 
