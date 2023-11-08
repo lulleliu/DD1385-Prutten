@@ -6,7 +6,7 @@ STEN = ROCK, SAX = SCISSORS, PASE = PAPER
 import java.net.*;
 import java.io.*;
 import java.util.*;
-public class Server {
+public class Server4713 {
     public static void main( String[] args) {
 	try {
 	    ServerSocket sock = new ServerSocket(4713,100);
