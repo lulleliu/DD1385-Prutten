@@ -1,0 +1,98 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "RPSSkel",
+            "request": "launch",
+            "mainClass": "RPSSkel",
+            "projectName": "DD1385-Prutten_c599fc3d"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Client",
+            "request": "launch",
+            "mainClass": "Client",
+            "projectName": "DD1385-Prutten_c599fc3d"
+        },
+        {
+            "type": "java",
+            "name": "RunFifteen",
+            "request": "launch",
+            "mainClass": "Labb2.RunFifteen",
+            "projectName": "DD1385-Prutten_c599fc3d"
+        },
+        {
+            "type": "java",
+            "name": "RunMock",
+            "request": "launch",
+            "mainClass": "Labb2.RunMock",
+            "projectName": "DD1385-Prutten_c599fc3d"
+        },
+        {
+            "type": "java",
+            "name": "RunTTT",
+            "request": "launch",
+            "mainClass": "Labb2.RunTTT",
+            "projectName": "DD1385-Prutten_c599fc3d"
+        },
+        {
+            "type": "java",
+            "name": "Text15",
+            "request": "launch",
+            "mainClass": "Labb2.Text15",
+            "projectName": "DD1385-Prutten_c599fc3d"
+        },
+        {
+            "type": "java",
+            "name": "MyFrameA",
+            "request": "launch",
+            "mainClass": "MyFrameA",
+            "projectName": "DD1385-Prutten_c599fc3d"
+        },
+        {
+            "type": "java",
+            "name": "MyFrameB",
+            "request": "launch",
+            "mainClass": "MyFrameB",
+            "projectName": "DD1385-Prutten_c599fc3d"
+        },
+        {
+            "type": "java",
+            "name": "MyFrameC",
+            "request": "launch",
+            "mainClass": "MyFrameC",
+            "projectName": "DD1385-Prutten_c599fc3d"
+        },
+        {
+            "type": "java",
+            "name": "MyFrameX",
+            "request": "launch",
+            "mainClass": "MyFrameX",
+            "projectName": "DD1385-Prutten_c599fc3d"
+        },
+        {
+            "type": "java",
+            "name": "RPSSkel",
+            "request": "launch",
+            "mainClass": "RPSSkel",
+            "projectName": "DD1385-Prutten_c599fc3d"
+        },
+        {
+            "type": "java",
+            "name": "Server4713",
+            "request": "launch",
+            "mainClass": "Server4713",
+            "projectName": "DD1385-Prutten_c599fc3d"
+        }
+    ]
+}
