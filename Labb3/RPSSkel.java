@@ -14,21 +14,27 @@ class RPSSkel extends JFrame {
     JButton closebutton;
 
     RPSSkel () {
-	setDefaultCloseOperation(EXIT_ON_CLOSE);
-	closebutton = new JButton("Close");
-	myboard = new Gameboard("Myself"); // Must be changed
-	computersboard = new Gameboard("Computer");
-	JPanel boards = new JPanel();
-	boards.setLayout(new GridLayout(1,2));
-	boards.add(myboard);
-	boards.add(computersboard);
-	add(boards, BorderLayout.CENTER);
-	add(closebutton, BorderLayout.SOUTH);
-	setSize(350, 650);
-	setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		closebutton = new JButton("Close");
+
+		myboard = new Gameboard("Myself"); // Must be changed
+		computersboard = new Gameboard("Computer");
+
+		JPanel boards = new JPanel();
+		boards.setLayout(new GridLayout(1,2));
+
+		boards.add(myboard);
+		boards.add(computersboard);
+
+		add(boards, BorderLayout.CENTER);
+		add(closebutton, BorderLayout.SOUTH);
+
+		setSize(350, 650);
+		setVisible(true);
     }
 
     public static void main (String[] u) {
-	new RPSSkel();
+		new RPSSkel();
+		// Här sker Sockethantering
     }
 }
