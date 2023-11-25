@@ -1,3 +1,4 @@
+package Uppgift1;
 import java.util.ArrayList;
 
 public class Composite extends Component {

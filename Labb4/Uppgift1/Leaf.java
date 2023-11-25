@@ -1,3 +1,4 @@
+package Uppgift1;
 public class Leaf extends Component{
     private String item;
     private Integer weight;
