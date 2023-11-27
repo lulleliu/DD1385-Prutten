@@ -23,15 +23,13 @@ public class DepthFirstIterator implements Iterator{
     }
 
     @Override
-    public Object next() {
-        // TODO Auto-generated method stub
+    public Component next() {
         if (hasNext()){
             Component nexComponent = componentsTree.get(0);
             componentsTree.remove(0);
 
             return nexComponent;
         }
-
         return null;
         
         
@@ -44,7 +42,6 @@ public class DepthFirstIterator implements Iterator{
 
     @Override
     public void remove() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
     

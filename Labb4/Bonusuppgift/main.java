@@ -4,6 +4,10 @@ public class main {
         Composite suitcase = new Composite("Suitcase", 10000);
         Composite toilet_bag = new Composite("Toilet bag", 200);
         Composite stuff = new Composite("Bag with stuff", 100);
+        Composite plastic_bag = new Composite("Plastic bag", 10);
+
+        plastic_bag.add(new Leaf("Shoes", 700));
+
         stuff.add(new Leaf("Pokemon card, Charizard", 5));
         stuff.add(new Leaf("Pokemon card, Lucario lvl X", 5));
         stuff.add(new Leaf("Pokemon card, Dark Slowbro", 5));
@@ -15,10 +19,12 @@ public class main {
         toilet_bag.add(new Leaf("Unused Deo", 150));
 
         suitcase.add(toilet_bag);
+        suitcase.add(plastic_bag);
         suitcase.add(new Leaf("Shirt", 300));
         Leaf jeans = new Leaf("Jeans", 1000);
         suitcase.add(jeans);
         
+        /*
         System.out.println(suitcase.toString());
         System.out.println("-----------------------------");
         System.out.println("total weight: " + suitcase.getWeight() + " grams");
@@ -40,10 +46,27 @@ public class main {
         System.out.println("New items in suitcase");
         System.out.println(suitcase.toString());
         System.out.println("New total weight: " + suitcase.getWeight() + " grams");
+        */
+
+        DepthFirstIterator dfs = new DepthFirstIterator(suitcase);
+        // System.out.println(dfs.next().toString());
+
+        System.out.println("-------DFS--------");
+        while (dfs.hasNext()) {
+            Component t = dfs.next();
+            System.out.println(t.toString());
+          }
 
 
-        //DepthFirstIterator dfs = new DepthFirstIterator(suitcase);
-        //dfs.next();
+        BredthFirstIterator bfs = new BredthFirstIterator(suitcase);
+        System.out.println("-------BFS--------");
+        while (bfs.hasNext()) {
+            System.out.println(bfs.next().toString());
+            
+          }
+        
+        System.out.println("New total weight: " + suitcase.getWeight() + " grams");
+        
 
     }
 }

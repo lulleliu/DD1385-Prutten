@@ -18,7 +18,7 @@ public class Composite extends Component {
     }
 
     public ArrayList<Component> getComponents(){
-        return components;
+        return this.components;
     }
 
     public Integer getWeight(){
@@ -30,7 +30,8 @@ public class Composite extends Component {
     }
 
     public String toString(){
-        String contains = item;
+        //String contains = item;
+        return this.item;
         
         /* 
         for (Component item : components){
@@ -39,12 +40,5 @@ public class Composite extends Component {
         
         return contains;
         */
-        
-        DepthFirstIterator dfsIterator = new DepthFirstIterator(this);
-        while (dfsIterator.hasNext()){
-            contains += "\n" + dfsIterator.next().toString();
-        }
-
-        return contains;
     }
 }
