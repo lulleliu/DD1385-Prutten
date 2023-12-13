@@ -16,7 +16,7 @@ class Gameboard extends JPanel {
     private JLabel upperMess, lowerMess, scorelabel;
     private int score;
     private Color bgcolor;
-    private HashMap<String,JButton> map = new HashMap<String,JButton>();
+    private HashMap<String, JButton> map = new HashMap<String, JButton>();
 
 
     // Constructor that builds the board, used for computers board
