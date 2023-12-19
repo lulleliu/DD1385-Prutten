@@ -7,49 +7,77 @@ import java.util.*;
 
 class RPSSkel extends JFrame implements ActionListener{
     Gameboard myboard, computersboard;
-    int counter = 0; // To count ONE ... TWO  and on THREE you play
+    Integer counter = 0; // To count ONE ... TWO  and on THREE you play
     Socket socket;
     BufferedReader in;
     PrintWriter out;
     JButton closebutton;
 
     RPSSkel() {
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		closebutton = new JButton("Close");
+		
+		try {
+            // localhost är alias för IP-adress för den lokala datorn d.v.s. den datorn 
+            // du kör detta program (vilket i detta fall är samma dator som serverprogrammet körs på)
+            Socket socket = new Socket("localhost",4713);
+            Scanner scanner = new Scanner(System.in);
 
-		myboard = new Gameboard("Myself", this); // Must be changed
-		computersboard = new Gameboard("Computer");
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter ut = new PrintWriter(socket.getOutputStream());
 
-		JPanel boards = new JPanel();
-		boards.setLayout(new GridLayout(1,2));
+            System.out.println("Enter your name: ");
+            String name = scanner.nextLine();
+            ut.println(name);
+            ut.flush();
 
-		boards.add(myboard);
-		boards.add(computersboard);
+            System.out.println(in.readLine());
 
-		add(boards, BorderLayout.CENTER);
-		add(closebutton, BorderLayout.SOUTH);
+			setDefaultCloseOperation(EXIT_ON_CLOSE);
+			closebutton = new JButton("Close");
 
-		setSize(350, 650);
-		setVisible(true);
-    }
+			myboard = new Gameboard(name, this); // Must be changed
+			computersboard = new Gameboard("Computer");
+
+			JPanel boards = new JPanel();
+			boards.setLayout(new GridLayout(1,2));
+
+			boards.add(myboard);
+			boards.add(computersboard);
+
+			add(boards, BorderLayout.CENTER);
+			add(closebutton, BorderLayout.SOUTH);
+
+			setSize(350, 650);
+			setVisible(true);
+		}
+		
+		catch (IOException e){
+			System.out.println("Ingen Anslutning");
+		}
+
+		
 	
+	}
+
 	public void actionPerformed(ActionEvent e) {
         // This method will be called when a button on the player's board is clicked
 
         
 		if (counter == 0){
-			system.out.println("ETT..");
+			System.out.println("ETT..");
+			myboard.resetColor();
 			counter++;
 		}
 		else if (counter == 1){
-			system.out.println("TVÅ..");
+			System.out.println("TVÅ..");
 			counter++;
 		}
 
 		else {
-			System.out.println("Du valde " + );
+			//System.out.println("Du valde " + e.getActionCommand );
 			counter = 0; 
 			String command = e.getActionCommand(); // Get the text from the button
+			System.out.println("Du valde " + command );
+
 		}
 
         // Handle the button click based on the command
@@ -57,17 +85,16 @@ class RPSSkel extends JFrame implements ActionListener{
         // ...
 
         // Update the UI based on the game result
-        playerBoard.setUpper("You chose: " + command);
+        //playerBoard.setUpper("You chose: " + command);
         // Update other UI components as needed
         // ...
 
         // Example: Mark the player's choice on the player's board
-        playerBoard.markPlayed(command);
+        //playerBoard.markPlayed(command);
     }
 
     public static void main (String[] u) {
-		RPSSkel skel = new RPSSkel();
-		skel.actionPerformed()
+		new RPSSkel();
 		// Här sker Sockethantering
     }
 }
