@@ -21,18 +21,19 @@ class RPSSkel extends JFrame implements ActionListener{
             Socket socket = new Socket("localhost",4713);
             Scanner scanner = new Scanner(System.in);
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter ut = new PrintWriter(socket.getOutputStream());
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream());
 
             System.out.println("Enter your name: ");
-            String name = scanner.nextLine();
-            ut.println(name);
-            ut.flush();
+           	String name = scanner.nextLine();
+            out.println(name);
+            out.flush();
 
             System.out.println(in.readLine());
 
 			setDefaultCloseOperation(EXIT_ON_CLOSE);
-			closebutton = new JButton("Close");
+			//closebutton = new JButton("Close");
+			createCloseBttn();
 
 			myboard = new Gameboard(name, this); // Must be changed
 			computersboard = new Gameboard("Computer");
@@ -58,27 +59,109 @@ class RPSSkel extends JFrame implements ActionListener{
 	
 	}
 
-	public void actionPerformed(ActionEvent e) {
-        // This method will be called when a button on the player's board is clicked
 
-        
-		if (counter == 0){
-			System.out.println("ETT..");
+	private void createCloseBttn(){
+		closebutton = new JButton("Close");
+		ActionListener closebuttonlistener = (new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				out.println("");
+				out.flush();
+				System.exit(0);
+			}	
+		});
+		closebutton.addActionListener(closebuttonlistener);
+	}
+
+
+
+	private void updateBoard(String playerPick, String computerPick){
+		if (counter == 1){
+			myboard.setLower("Ett...");
+			computersboard.setLower("Ett..");
+			myboard.setUpper("RPS");
+			computersboard.setUpper("RPS");
+			//myboard.setUpper(playerPick);
+			//computersboard.setUpper(computerPick);
+
 			myboard.resetColor();
-			counter++;
-		}
-		else if (counter == 1){
-			System.out.println("TVÅ..");
-			counter++;
+			computersboard.resetColor();
+
+			}
+
+		if (counter == 2){
+			myboard.setLower("Två...");
+			computersboard.setLower("Två..");
+		
+			//myboard.setUpper(playerPick);
+			//computersboard.setUpper(computerPick);
+
+			}
+
+		if (counter == 3){
+			counter = 0;
+
+			myboard.resetColor();
+			computersboard.resetColor();
+
+			myboard.markPlayed(playerPick);
+			computersboard.markPlayed(computerPick);
+			
+			myboard.setLower(playerPick);
+			computersboard.setLower(computerPick);
+
+			myboard.setUpper(playerPick);
+			computersboard.setUpper(computerPick);
+
+			result(playerPick, computerPick);
+			
+			// Object clicked = e.getSource();
+
+			}
+		
+	}
+
+	private void result(String playerPick, String computerPick){
+		if (playerPick.equals(computerPick)){
+			myboard.setLower("DRAW");
+			computersboard.setLower("DRAW");
+		} 
+		
+		else if
+			(playerPick.equals("SAX") && computerPick.equals("PASE") ||
+			playerPick.equals("PASE") && computerPick.equals("STEN") ||
+			playerPick.equals("STEN") && computerPick.equals("SAX")){
+			myboard.setLower("WIN");
+			computersboard.setLower("LOSE");
+			myboard.wins();
 		}
 
 		else {
-			//System.out.println("Du valde " + e.getActionCommand );
-			counter = 0; 
-			String command = e.getActionCommand(); // Get the text from the button
-			System.out.println("Du valde " + command );
-
+			myboard.setLower("LOSE");
+			computersboard.setLower("WIN");
+			computersboard.wins();
 		}
+		
+	}
+
+	public void actionPerformed(ActionEvent e) {
+        // This method will be called when a button on the player's board is clicked
+		counter++;
+		String playerPick = e.getActionCommand();
+		System.out.println(playerPick);
+		String computerPick;
+		try {
+			out.println(playerPick);
+			out.flush();
+
+			computerPick = in.readLine();
+			updateBoard(playerPick, computerPick);
+
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+
 
         // Handle the button click based on the command
         // You can add your game logic here, for example, compare player's choice with computer's choice
@@ -98,3 +181,5 @@ class RPSSkel extends JFrame implements ActionListener{
 		// Här sker Sockethantering
     }
 }
+
+
