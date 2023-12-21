@@ -64,6 +64,7 @@ class PreparationTree extends JFrame implements ActionListener {
     }
 
 	private void buildTree(TaxonomyNode parent, ArrayList<String> data){
+		/* 
 		while (!data.isEmpty()) {
 			String line = data.get(0).trim();
 	
@@ -90,30 +91,29 @@ class PreparationTree extends JFrame implements ActionListener {
 				data.remove(0);
 			}
 		}
-		/*
-		while (!data.isEmpty()) {
-			ArrayList<String> line = new ArrayList<>(Arrays.asList(data.get(0).trim().split(" ")));
-	
-			if (line.size() < 3) {
-				if (parent.getTheLevel().equals(line.get(0).substring(line.get(0).indexOf("/")+1, line.get(0).indexOf(">")))) {
-					data.remove(0);
-				} else {
-					return;
-				}
-			} else {
-				String level = line.get(0);
-				String name = line.get(1);
-				String info = String.join(" ", line.subList(2, line.size()));
-	
-				TaxonomyNode child = new TaxonomyNode(level, name, info);
-				parent.add(child);
-				System.out.println(parent.toString() + Integer.toString(parent.getChildCount()));
-	
-				data.remove(0);
-				buildTree(child, data);
-			}
-		}
 		*/
+		
+		ArrayList<String> line = new ArrayList<>(Arrays.asList(data.get(0).trim().split(" ")));
+		if (line.size() < 3) {
+			if (!parent.getTheLevel().equals(line.get(0).substring(line.get(0).indexOf("/")+1, line.get(0).indexOf(">")))) {
+				data.remove(0);
+			}
+		} else {
+			String level = line.get(0);
+			String name = line.get(1);
+			String info = String.join(" ", line.subList(2, line.size()));
+
+			TaxonomyNode child = new TaxonomyNode(level, name, info);
+			parent.add(child);
+			data.remove(0);
+			
+			line = new ArrayList<>(Arrays.asList(data.get(0).trim().split(" ")));
+			while (line.size() >= 3 || !child.getTheLevel().equals(line.get(0).substring(line.get(0).indexOf("/")+1, line.get(0).indexOf(">")))) {
+				buildTree(child, data);
+				line = new ArrayList<>(Arrays.asList(data.get(0).trim().split(" ")));
+			}
+			data.remove(0);
+		}
 		/* 
 		ArrayList<String> line = new ArrayList<>(Arrays.asList(data.get(0).trim().split(" ")));
 
@@ -197,7 +197,7 @@ class PreparationTree extends JFrame implements ActionListener {
         String info = String.join(" ", first_line.subList(2, first_line.size()));
 		root = new TaxonomyNode(level, name, info);
 
-		data.remove(0);
+		// data.remove(0);
 		buildTree(root, data);
 		/*
 		for (String line : data) {
@@ -302,7 +302,9 @@ class PreparationTree extends JFrame implements ActionListener {
 
 				// System.out.println("Cleaned line: " + cleaned_line);
 				cleaned.add(cleaned_line);
+				System.out.println(cleaned_line);
 			}
+			
 			// System.out.println(cleaned);
 			sc.close();
 

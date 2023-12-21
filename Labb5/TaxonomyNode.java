@@ -7,7 +7,7 @@ class TaxonomyNode extends DefaultMutableTreeNode{
     public String level;
 
     TaxonomyNode(String level, String name, String info){
-        super(name);
+        super(level);
         this.info = info;
         this.level = level;
 
