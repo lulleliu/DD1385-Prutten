@@ -63,55 +63,170 @@ class PreparationTree extends JFrame implements ActionListener {
 		controls.add(b);
     }
 
-	private void buildTree(TaxonomyNode parent, ArrayList<String> parts){
-		if (parts.size() < 3) {
-            return;
-        }
+	private void buildTree(TaxonomyNode parent, ArrayList<String> data){
+		while (!data.isEmpty()) {
+			String line = data.get(0).trim();
+	
+			if (line.startsWith("<") && line.endsWith(">")) {
+				// It's a tag
+				String[] parts = line.substring(1, line.length() - 1).split(" ", 2);
+				String level = parts[0];
+				String content = parts.length > 1 ? parts[1] : "";
+	
+				TaxonomyNode child = new TaxonomyNode(level, "", content);
+				parent.add(child);
+				System.out.println(parent.toString() + Integer.toString(parent.getChildCount()));
+	
+				data.remove(0);
+	
+				// Recursively build tree for child nodes
+				buildTree(child, data);
+			} else if (line.startsWith("</")) {
+				// It's a closing tag, return to the upper level
+				data.remove(0);
+				return;
+			} else {
+				// It's not a tag, move to the next line
+				data.remove(0);
+			}
+		}
+		/*
+		while (!data.isEmpty()) {
+			ArrayList<String> line = new ArrayList<>(Arrays.asList(data.get(0).trim().split(" ")));
+	
+			if (line.size() < 3) {
+				if (parent.getTheLevel().equals(line.get(0).substring(line.get(0).indexOf("/")+1, line.get(0).indexOf(">")))) {
+					data.remove(0);
+				} else {
+					return;
+				}
+			} else {
+				String level = line.get(0);
+				String name = line.get(1);
+				String info = String.join(" ", line.subList(2, line.size()));
+	
+				TaxonomyNode child = new TaxonomyNode(level, name, info);
+				parent.add(child);
+				System.out.println(parent.toString() + Integer.toString(parent.getChildCount()));
+	
+				data.remove(0);
+				buildTree(child, data);
+			}
+		}
+		*/
+		/* 
+		ArrayList<String> line = new ArrayList<>(Arrays.asList(data.get(0).trim().split(" ")));
 
-        String level = parts.get(0);
-        String name = parts.get(1);
-        String info = String.join(" ", parts.subList(2, parts.size()));
+		if (line.size()<3){
+			if (parent.getTheLevel().equals(line.get(0).substring(line.get(0).indexOf("/")+1, line.get(0).indexOf(">"))) && data.isEmpty()){
+				System.out.println("Balle");
+				return;
+			} 
+			else{
+				System.out.println("Removing " + data.get(0));
+
+				data.remove(0);
+				if(data.isEmpty()){
+					System.out.println("Empty 1");
+					return;
+				}
+				buildTree(parent, data);
+
+			}
+		}
+		
+
+		/* 
+		if (line.size() < 3) {
+			if (data.isEmpty()){
+				return;
+			}
+			
+			else {
+				data.remove(0);
+				buildTree(parent, data);
+			}
+        }
+		*/
+		/* 
+		if (line.size() == 1) {
+			if (line.get(0).equals(parent.getTheLevel())) {
+				if (!data.isEmpty()) {
+				  TaxonomyNode p = (TaxonomyNode) parent.getParent();
+
+				  data.remove(0);
+				  buildTree(p, data);
+				}
+				return;
+			}
+			else{
+				System.out.println("error");
+			}
+		}
+		*/
+		/* 
+        String level = line.get(0);
+        String name = line.get(1);
+        String info = String.join(" ", line.subList(2, line.size()));
 
         TaxonomyNode child = new TaxonomyNode(level, name, info);
         parent.add(child);
+		System.out.println(parent.toString() + Integer.toString(parent.getChildCount()));
 
-        if (parts.size() > 3) {
-            buildTree(child, new ArrayList<>(parts.subList(3, parts.size())));
+        if (line.size() > 3) {
+			data.remove(0);
+
+			if(data.isEmpty()){
+				System.out.println("Empty 2");
+				return;
+			}
+
+            buildTree(child, data);
         }
+		*/
+
 	}
 
     // ***** Override method initTree in your subclass
     // ***** create root, treeModel and tree in the new initTree
     void initTree(ArrayList<String> data){
 
-		root = new TaxonomyNode("Liv", "Liv", "");
+		ArrayList<String> first_line = new ArrayList<>(Arrays.asList(data.get(0).trim().split(" ")));
+		String level = first_line.get(0);
+        String name = first_line.get(1);
+        String info = String.join(" ", first_line.subList(2, first_line.size()));
+		root = new TaxonomyNode(level, name, info);
 
+		data.remove(0);
+		buildTree(root, data);
+		/*
 		for (String line : data) {
             buildTree(root, new ArrayList<>(Arrays.asList(line.trim().split(" "))));
         }
+		*/
 
         treeModel = new DefaultTreeModel(root);
         tree = new JTree(treeModel);
 
 		/*
-		ArrayList<String> parts = new ArrayList<>(Arrays.asList(data.get(0).trim().split(" ")));
-		if (parts.size() == 1){
+		ArrayList<String> data = new ArrayList<>(Arrays.asList(data.get(0).trim().split(" ")));
+		if (data.size() == 1){
 			return root;
 		}
 
 		data.remove(0);
 
-		String level = parts.get(0);
-		String name = parts.get(1);
+		String level = data.get(0);
+		String name = data.get(1);
 		String info = "";
 
-		for (int i = 2; i < parts.size(); i++) {
+		for (int i = 2; i < data.size(); i++) {
 			if (i == 2){
-				info = info + parts.get(i);
+				info = info + data.get(i);
 			}
 
 			else {
-				info = info + " " + parts.get(i);
+				info = info + " " + data.get(i);
 			}
 		}
 
@@ -161,10 +276,10 @@ class PreparationTree extends JFrame implements ActionListener {
 				// System.out.println("Line read: " + nextLine);
 
 
-				ArrayList<String> parts = new ArrayList<>(Arrays.asList(nextLine.split(" ")));
+				ArrayList<String> data = new ArrayList<>(Arrays.asList(nextLine.split(" ")));
 				String cleaned_line = "";
 
-				for (String part: parts){
+				for (String part: data){
 					String trimmed_part = part.trim();
 					String firstChar = String.valueOf(trimmed_part.charAt(0));
 
