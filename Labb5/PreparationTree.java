@@ -103,69 +103,15 @@ class PreparationTree extends JFrame implements ActionListener {
         String info = String.join(" ", first_line.subList(2, first_line.size()));
 		root = new TaxonomyNode(level, name, info);
 
-		// data.remove(0);
 		buildTree(root, data);
-		/*
-		for (String line : data) {
-            buildTree(root, new ArrayList<>(Arrays.asList(line.trim().split(" "))));
-        }
-		*/
 
         treeModel = new DefaultTreeModel(root);
         tree = new JTree(treeModel);
-
-		/*
-		ArrayList<String> data = new ArrayList<>(Arrays.asList(data.get(0).trim().split(" ")));
-		if (data.size() == 1){
-			return root;
-		}
-
-		data.remove(0);
-
-		String level = data.get(0);
-		String name = data.get(1);
-		String info = "";
-
-		for (int i = 2; i < data.size(); i++) {
-			if (i == 2){
-				info = info + data.get(i);
-			}
-
-			else {
-				info = info + " " + data.get(i);
-			}
-		}
-
-		root = new TaxonomyNode(level, name, info);
-		TaxonomyNode child = initTree(data);
-		root.add(child);
-
-		if (data.isEmpty()){
-			treeModel = new DefaultTreeModel(root);
-			tree = new JTree(treeModel);
-		}
-
-		
-		
-			
-		/* 
-		root = new TaxonomyNode("he");
-		DefaultMutableTreeNode child1 = new DefaultMutableTreeNode("Växter");
-		DefaultMutableTreeNode child2 = new DefaultMutableTreeNode("Djur");
-		DefaultMutableTreeNode child3 = new DefaultMutableTreeNode("Svampar");
-		root.add(child1);
-		root.add(child2);
-		root.add(child3);
-		treeModel = new DefaultTreeModel(root);
-		tree = new JTree(treeModel);
-		*/
     }
 
     // ***** showDetails can also be overridden in a subclass *****
-    void showDetails(TreePath path){
-		if (path == null)
-			return;
-		String info = path.getLastPathComponent().toString();
+    void showDetails(TaxonomyNode node){
+		String info = node.getTheInfo();
 		JOptionPane.showMessageDialog(this, info);
     }
 

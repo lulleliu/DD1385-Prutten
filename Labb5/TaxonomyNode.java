@@ -21,4 +21,5 @@ class TaxonomyNode extends DefaultMutableTreeNode{
         return this.info;
     }
 
+
 }
