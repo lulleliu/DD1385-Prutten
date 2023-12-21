@@ -64,36 +64,9 @@ class PreparationTree extends JFrame implements ActionListener {
     }
 
 	private void buildTree(TaxonomyNode parent, ArrayList<String> data){
-		/* 
-		while (!data.isEmpty()) {
-			String line = data.get(0).trim();
-	
-			if (line.startsWith("<") && line.endsWith(">")) {
-				// It's a tag
-				String[] parts = line.substring(1, line.length() - 1).split(" ", 2);
-				String level = parts[0];
-				String content = parts.length > 1 ? parts[1] : "";
-	
-				TaxonomyNode child = new TaxonomyNode(level, "", content);
-				parent.add(child);
-				System.out.println(parent.toString() + Integer.toString(parent.getChildCount()));
-	
-				data.remove(0);
-	
-				// Recursively build tree for child nodes
-				buildTree(child, data);
-			} else if (line.startsWith("</")) {
-				// It's a closing tag, return to the upper level
-				data.remove(0);
-				return;
-			} else {
-				// It's not a tag, move to the next line
-				data.remove(0);
-			}
-		}
-		*/
-		
-		ArrayList<String> line = new ArrayList<>(Arrays.asList(data.get(0).trim().split(" ")));
+
+		ArrayList<String> line = new ArrayList<>(Arrays.asList(data.get(0).trim().split("::")));
+		System.out.println(line);
 		if (line.size() < 3) {
 			if (!parent.getTheLevel().equals(line.get(0).substring(line.get(0).indexOf("/")+1, line.get(0).indexOf(">")))) {
 				data.remove(0);
@@ -101,89 +74,22 @@ class PreparationTree extends JFrame implements ActionListener {
 		} else {
 			String level = line.get(0);
 			String name = line.get(1);
-			String info = String.join(" ", line.subList(2, line.size()));
+			//String info = String.join(" ", line.subList(2, line.size()));
+			String info = line.get(2);
+			System.out.println(info);
+			//System.out.println(level + " " + name + " " + info);
 
 			TaxonomyNode child = new TaxonomyNode(level, name, info);
 			parent.add(child);
 			data.remove(0);
 			
-			line = new ArrayList<>(Arrays.asList(data.get(0).trim().split(" ")));
+			line = new ArrayList<>(Arrays.asList(data.get(0).trim().split("::")));
 			while (line.size() >= 3 || !child.getTheLevel().equals(line.get(0).substring(line.get(0).indexOf("/")+1, line.get(0).indexOf(">")))) {
 				buildTree(child, data);
-				line = new ArrayList<>(Arrays.asList(data.get(0).trim().split(" ")));
+				line = new ArrayList<>(Arrays.asList(data.get(0).trim().split("::")));
 			}
 			data.remove(0);
 		}
-		/* 
-		ArrayList<String> line = new ArrayList<>(Arrays.asList(data.get(0).trim().split(" ")));
-
-		if (line.size()<3){
-			if (parent.getTheLevel().equals(line.get(0).substring(line.get(0).indexOf("/")+1, line.get(0).indexOf(">"))) && data.isEmpty()){
-				System.out.println("Balle");
-				return;
-			} 
-			else{
-				System.out.println("Removing " + data.get(0));
-
-				data.remove(0);
-				if(data.isEmpty()){
-					System.out.println("Empty 1");
-					return;
-				}
-				buildTree(parent, data);
-
-			}
-		}
-		
-
-		/* 
-		if (line.size() < 3) {
-			if (data.isEmpty()){
-				return;
-			}
-			
-			else {
-				data.remove(0);
-				buildTree(parent, data);
-			}
-        }
-		*/
-		/* 
-		if (line.size() == 1) {
-			if (line.get(0).equals(parent.getTheLevel())) {
-				if (!data.isEmpty()) {
-				  TaxonomyNode p = (TaxonomyNode) parent.getParent();
-
-				  data.remove(0);
-				  buildTree(p, data);
-				}
-				return;
-			}
-			else{
-				System.out.println("error");
-			}
-		}
-		*/
-		/* 
-        String level = line.get(0);
-        String name = line.get(1);
-        String info = String.join(" ", line.subList(2, line.size()));
-
-        TaxonomyNode child = new TaxonomyNode(level, name, info);
-        parent.add(child);
-		System.out.println(parent.toString() + Integer.toString(parent.getChildCount()));
-
-        if (line.size() > 3) {
-			data.remove(0);
-
-			if(data.isEmpty()){
-				System.out.println("Empty 2");
-				return;
-			}
-
-            buildTree(child, data);
-        }
-		*/
 
 	}
 
@@ -273,11 +179,33 @@ class PreparationTree extends JFrame implements ActionListener {
 			while (sc.hasNext()){
 				
 				String nextLine = sc.nextLine();
-				// System.out.println("Line read: " + nextLine);
+				System.out.println("Line read: " + nextLine);
 
 
-				ArrayList<String> data = new ArrayList<>(Arrays.asList(nextLine.split(" ")));
+				// ArrayList<String> data = new ArrayList<>(Arrays.asList(nextLine.split(" ")));
 				String cleaned_line = "";
+
+				if (!nextLine.contains("/")){
+					String level = nextLine.substring(nextLine.indexOf("<")+1, nextLine.indexOf(" namn"));
+					String name = nextLine.substring(nextLine.indexOf("namn=") +6, nextLine.indexOf(">")-1);
+					String info = nextLine.substring(nextLine.indexOf(">") +2, nextLine.length());
+
+					cleaned_line = cleaned_line + level;
+					cleaned_line = cleaned_line + "::" + name;
+					cleaned_line = cleaned_line + "::" + info.strip();
+					System.out.println(cleaned_line);
+					cleaned.add(cleaned_line);
+				}
+
+				else {
+					cleaned_line = nextLine.substring(nextLine.indexOf("/"), nextLine.length());
+					System.out.println(cleaned_line);
+					cleaned.add(cleaned_line);
+				}
+
+			}
+			System.out.println(cleaned);
+				/*
 
 				for (String part: data){
 					String trimmed_part = part.trim();
@@ -302,8 +230,9 @@ class PreparationTree extends JFrame implements ActionListener {
 
 				// System.out.println("Cleaned line: " + cleaned_line);
 				cleaned.add(cleaned_line);
-				System.out.println(cleaned_line);
+				// System.out.println(cleaned_line);
 			}
+			*/
 			
 			// System.out.println(cleaned);
 			sc.close();
