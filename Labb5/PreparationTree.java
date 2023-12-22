@@ -1,5 +1,9 @@
+import test.*;
 import javax.swing.*;
 import javax.swing.tree.*;
+
+import test.TaxonomyNode;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,7 +72,6 @@ class PreparationTree extends JFrame implements ActionListener {
 
 		ArrayList<String> line = new ArrayList<>(Arrays.asList(data.get(0).trim().split("::")));
 
-			System.out.println(line);
 			if (line.size() < 3) {
 				if (!parent.getTheLevel().equals(line.get(0).substring(line.get(0).indexOf("/")+1, line.get(0).indexOf(">")))) {
 					data.remove(0);
@@ -85,7 +88,13 @@ class PreparationTree extends JFrame implements ActionListener {
 				line = new ArrayList<>(Arrays.asList(data.get(0).trim().split("::")));
 				while (line.size() >= 3 || !child.getTheLevel().equals(line.get(0).substring(line.get(0).indexOf("/")+1, line.get(0).indexOf(">")))) {
 					buildTree(child, data);
-					line = new ArrayList<>(Arrays.asList(data.get(0).trim().split("::")));
+					try {
+						line = new ArrayList<>(Arrays.asList(data.get(0).trim().split("::")));
+					} catch (IndexOutOfBoundsException e) {
+						System.out.println("ERROR! Unmatching tags");
+						return;
+					}
+					
 				}
 				data.remove(0);
 		}
@@ -93,7 +102,13 @@ class PreparationTree extends JFrame implements ActionListener {
 
 	}
 
-	public static ArrayList<String> read_file(String filename){
+	public static ArrayList<String> read_file(String filename) throws Exception{
+
+		// Räknare som håller koll på öppning och stängnings taggar
+
+		Integer start_count = 0;
+		Integer end_count = 0;
+
 		try {
 				Scanner sc = new Scanner(new File(filename));
 
@@ -105,18 +120,21 @@ class PreparationTree extends JFrame implements ActionListener {
 
 					String cleaned_line = "";
 
-					if (!nextLine.contains("/")){
+					if (!nextLine.contains("/")){			// Om inte stängningstagg så läser vi in alla delar av raden
+						start_count++;
 						String level = nextLine.substring(nextLine.indexOf("<")+1, nextLine.indexOf(" namn"));
 						String name = nextLine.substring(nextLine.indexOf("namn=") +6, nextLine.indexOf(">")-1);
 						String info = nextLine.substring(nextLine.indexOf(">") +2, nextLine.length());
 
+						// Bygger den processade strängen med utfunna delanra
 						cleaned_line = cleaned_line + level;
 						cleaned_line = cleaned_line + "::" + name;
 						cleaned_line = cleaned_line + "::" + info.strip();
-						cleaned.add(cleaned_line);
+						cleaned.add(cleaned_line);		// Lägger till processad sträng till vår lista
 					}
 
-					else {
+					else {		// Om stängningstagg
+						end_count++;
 						cleaned_line = nextLine.substring(nextLine.indexOf("/"), nextLine.length());
 						cleaned.add(cleaned_line);
 					}
@@ -124,7 +142,13 @@ class PreparationTree extends JFrame implements ActionListener {
 				}
 
 				sc.close();
-				return cleaned;
+
+				if (start_count==end_count){		// Kollar om inläsning av taggar matchar
+					return cleaned;
+				} else {
+					throw new Exception("Unmatching opening and closing tags!");
+				}
+				
 		}
 		catch (FileNotFoundException e){
 			System.out.println("Whoops! No such file: " + filename);
@@ -135,14 +159,20 @@ class PreparationTree extends JFrame implements ActionListener {
     // ***** Override method initTree in your subclass
     // ***** create root, treeModel and tree in the new initTree
     void initTree(ArrayList<String> data){
-	
-		ArrayList<String> first_line = new ArrayList<>(Arrays.asList(data.get(0).trim().split(" ")));
+
+		/*
+		ArrayList<String> first_line = new ArrayList<>(Arrays.asList(data.get(0).trim().split("::")));
 		String level = first_line.get(0);
         String name = first_line.get(1);
         String info = String.join(" ", first_line.subList(2, first_line.size()));
 
 		root = new TaxonomyNode(level, name, info);
+		 */
 
+		// Skapar roten
+		root = new TaxonomyNode("Allt", "Allt", "Allt");
+
+		// Bygger träd ur roten. Datan är en lista med strängar. Varje sträng är en processad linje från inläst dokument.
 		buildTree(root, data);
 		
 
@@ -155,30 +185,21 @@ class PreparationTree extends JFrame implements ActionListener {
     void showDetails(TreePath path){
 		if (path == null)
 			return;
-		TaxonomyNode node = (TaxonomyNode) path.getLastPathComponent();
-		JOptionPane.showMessageDialog(this, node.getTheInfo());
+		TaxonomyNode node = (TaxonomyNode) path.getLastPathComponent();		// Tar fram noden som klickats på
+		JOptionPane.showMessageDialog(this, node.getTheInfo());		// Skriver informationen tillhörande noden till rutan
     }
 
-    public static void main(String[] u) {
-
-		try {
+    public static void main(String[] u) throws Exception {
+		
+		try {		// Testar om egeninmatad filnamn existerar
 			String filename = u[0];
-			System.out.println("IN 1");
-			ArrayList<String> cleaned = read_file(filename);
-			System.out.println("IN 2");
-			System.out.println("Cleaned: " + cleaned.toString());
-			new PreparationTree(cleaned);
-			System.out.println("IN 3");
+			ArrayList<String> cleaned = read_file(filename); 	// I sådanna fall läser vi filen
+			new PreparationTree(cleaned);		// Bygger träd med inlästa filen
 			
 		} catch(ArrayIndexOutOfBoundsException e){
-			System.out.println("IN 3");
-			ArrayList<String> cleaned = read_file("Liv.txt");
+			ArrayList<String> cleaned = read_file("Liv.txt");		// Om inmatning ej existerar så läser vi in "Liv.txt" hårdkodat
 			new PreparationTree(cleaned);
 		}
-
-		//Scanner sc = new Scanner(new File("Liv.txt"));
-
-
 		
     }
 }

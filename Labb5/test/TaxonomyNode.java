@@ -1,13 +1,16 @@
+package test;
 import javax.swing.tree.*;
 
 public class TaxonomyNode extends DefaultMutableTreeNode{
     public String info;
     public String level;
+    public String name;
 
-    TaxonomyNode(String level, String name, String info){
+    public TaxonomyNode(String level, String name, String info){
         super(name);
         this.info = info;
         this.level = level;
+        this.name = name;
 
     }
 
@@ -19,5 +22,8 @@ public class TaxonomyNode extends DefaultMutableTreeNode{
         return this.info;
     }
 
+    public String getTheName(){
+        return this.name;
+    }
 
 }
