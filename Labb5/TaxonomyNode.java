@@ -1,8 +1,6 @@
-import javax.swing.*;
 import javax.swing.tree.*;
-import java.io.*;        
 
-class TaxonomyNode extends DefaultMutableTreeNode{
+public class TaxonomyNode extends DefaultMutableTreeNode{
     public String info;
     public String level;
 
