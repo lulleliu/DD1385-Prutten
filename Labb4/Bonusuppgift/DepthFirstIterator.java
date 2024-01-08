@@ -31,9 +31,8 @@ public class DepthFirstIterator implements Iterator{
             return nexComponent;
         }
         return null;
-        
-        
     }
+    
 
     @Override
     public boolean hasNext() {

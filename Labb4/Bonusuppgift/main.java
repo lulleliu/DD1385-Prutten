@@ -60,11 +60,18 @@ public class main {
 
         BredthFirstIterator bfs = new BredthFirstIterator(suitcase);
         System.out.println("-------BFS--------");
+        
         while (bfs.hasNext()) {
             System.out.println(bfs.next().toString());
             
           }
         
+        
+        System.out.println("-------For-each--------");
+        for( Component co: suitcase){
+          System.out.println(co);
+        }
+
         System.out.println("New total weight: " + suitcase.getWeight() + " grams");
         
 
