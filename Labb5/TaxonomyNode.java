@@ -1,4 +1,4 @@
-package test;
+// package test;
 import javax.swing.tree.*;
 
 public class TaxonomyNode extends DefaultMutableTreeNode{

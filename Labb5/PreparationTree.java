@@ -1,8 +1,8 @@
-import test.*;
+// import test.*;
 import javax.swing.*;
 import javax.swing.tree.*;
 
-import test.TaxonomyNode;
+//import test.TaxonomyNode;
 
 import java.io.*;
 import java.util.ArrayList;
