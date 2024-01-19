@@ -1,8 +1,8 @@
-import test.*;
+// import test.*;
 import javax.swing.*;
 import javax.swing.tree.*;
 
-import test.TaxonomyNode;
+//import test.TaxonomyNode;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -71,6 +71,9 @@ class PreparationTree extends JFrame implements ActionListener {
 	private void buildTree(TaxonomyNode parent, ArrayList<String> data){
 
 		ArrayList<String> line = new ArrayList<>(Arrays.asList(data.get(0).trim().split("::")));
+		//[Biosför, Liv, Fdslkjfjoiji]
+		// Parent: [ALLT, ALLT, ALLT]
+		// [/Biosfär>]
 
 			if (line.size() < 3) {
 				if (!parent.getTheLevel().equals(line.get(0).substring(line.get(0).indexOf("/")+1, line.get(0).indexOf(">")))) {
@@ -86,6 +89,8 @@ class PreparationTree extends JFrame implements ActionListener {
 				data.remove(0);
 				
 				line = new ArrayList<>(Arrays.asList(data.get(0).trim().split("::")));
+				//[Rike, Växter, grpkgrepokg]
+				
 				while (line.size() >= 3 || !child.getTheLevel().equals(line.get(0).substring(line.get(0).indexOf("/")+1, line.get(0).indexOf(">")))) {
 					buildTree(child, data);
 					try {
