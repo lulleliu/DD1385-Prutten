@@ -64,6 +64,7 @@ class RPSSkel extends JFrame implements ActionListener{
 		closebutton = new JButton("Close");
 		ActionListener closebuttonlistener = (new ActionListener() {
 			public void actionPerformed(ActionEvent e){
+				//Skapar en stäng knapp
 				out.println("");
 				out.flush();
 				System.exit(0);
@@ -100,8 +101,8 @@ class RPSSkel extends JFrame implements ActionListener{
 		if (counter == 3){
 			counter = 0;
 
-			myboard.resetColor();
-			computersboard.resetColor();
+			//myboard.resetColor();
+			//computersboard.resetColor();
 
 			myboard.markPlayed(playerPick);
 			computersboard.markPlayed(computerPick);
