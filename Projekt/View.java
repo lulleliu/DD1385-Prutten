@@ -3,9 +3,7 @@ import java.awt.*;
 
 public class View extends JFrame{
     private JFrame frame;
-    private JButton start;
-    private JButton stop;
-    private JSlider slider;
+    private JPanel Control;
 
     public View(){
         frame = new JFrame("Simulation");
@@ -13,24 +11,10 @@ public class View extends JFrame{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //frame.setLayout(new BorderLayout());
 
-
-        JPanel controlpanel = new JPanel();
-        start = new JButton("Start");
-        stop = new JButton("Stop");
-
-        slider = new JSlider(0, 100);
-        slider.setValue(50);
-        
-
-
-        controlpanel.add(stop);
-        controlpanel.add(start);
-        controlpanel.add(slider);
+        ControlPanel controlpanel = new ControlPanel();
         frame.add(controlpanel, BorderLayout.SOUTH);
-
+    
         frame.setVisible(true);
-
-        
     }
 
     public static void main(String[] args) {
