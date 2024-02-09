@@ -18,6 +18,7 @@ public class View extends JFrame{
     }
 
     public static void main(String[] args) {
+        Model model = new Model();
         new View();
     }
     

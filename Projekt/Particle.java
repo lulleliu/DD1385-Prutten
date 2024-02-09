@@ -1,8 +1,9 @@
 import java.lang.Math;
+import java.util.Random;
 
 public class Particle {
-    private float y;
-    private float x; 
+    private double y;
+    private double x; 
     private boolean moving;
 
     
@@ -20,5 +21,9 @@ public class Particle {
 
     public void move(){
     //metod för att flytta partiklar slumpmässigt enligt
+        Random r = new Random();
+        double randomValue = 0 + (2) * r.nextDouble() * Math.PI;
+        this.x = x + randomValue;
+        this.y = y + randomValue;
     } 
 }

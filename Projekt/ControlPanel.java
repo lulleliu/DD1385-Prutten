@@ -44,8 +44,7 @@ public class ControlPanel extends JPanel{
         
         ActionListener startButtonlistener = (new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                //model.start()
-                System.out.println("Starting");
+                Model.start();
             }	
         });
     
